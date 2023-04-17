@@ -2,9 +2,6 @@ package no.uib.inf101.sample;
 
 import java.awt.Color;
 
-// Denne klassen er bare et eksempel, og bør slettes når du begynner å
-// komme i gang med ditt eget program.
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

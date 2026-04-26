@@ -1,7 +1,6 @@
-package no.uib.inf101.sample;
+package no.uib.inf101.sample.view;
 
 import java.awt.Color;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,6 +9,11 @@ import java.util.Objects;
 
 import javax.swing.JPanel;
 
+import no.uib.inf101.sample.datastructure.CellPosition;
+import no.uib.inf101.sample.datastructure.CellPositionToPixelConverter;
+import no.uib.inf101.sample.datastructure.GridDimension;
+import no.uib.inf101.sample.model.SudokuModel;
+
 /**
  * A view of a grid
  */
@@ -17,15 +21,15 @@ public class View extends JPanel {
 
   private static final int OUTER_MARGIN = 20;
   private static final int INNER_MARGIN = 5;
-  private static final Color SELECTED_COLOR = Color.ORANGE.darker();
-  private static final Color STD_COLOR = Color.BLACK;
+  private static final Color SELECTED_COLOR = Color.LIGHT_GRAY;
+  private static final Color STD_COLOR = Color.WHITE;
 
-  private Model model;
+  private SudokuModel model;
 
   /** Construct a new View */
-  public View(Model model) {
+  public View(SudokuModel model) {
     this.model = model;
-    this.setPreferredSize(new Dimension(400, 150));
+    this.setPreferredSize(new Dimension(600, 600));
   }
 
   @Override

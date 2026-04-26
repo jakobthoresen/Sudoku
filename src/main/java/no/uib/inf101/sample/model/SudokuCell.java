@@ -1,5 +1,7 @@
 package no.uib.inf101.sample.model;
 
-public record SudokuCell(int value, boolean isFixed) {
+import no.uib.inf101.sample.datastructure.CellPosition;
+
+public record SudokuCell(CellPosition pos, int value, boolean isFixed) {
 
 }

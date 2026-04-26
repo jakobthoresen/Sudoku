@@ -1,4 +1,4 @@
-package no.uib.inf101.sample;
+package no.uib.inf101.sample.datastructure;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;

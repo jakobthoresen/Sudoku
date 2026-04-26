@@ -1,12 +1,15 @@
-package no.uib.inf101.sample;
+package no.uib.inf101.sample.model;
+
+import no.uib.inf101.sample.datastructure.CellPosition;
+import no.uib.inf101.sample.datastructure.GridDimension;
 
 /**
  * The model contains two bits of data: the size of the grid to draw, and
  * which cell in the grid is currently highlighted.
  */
-public class Model {
+public class SudokuModel {
   
-  private GridDimension gd = new GridDimension.Record(5, 10);
+  private GridDimension gd = new GridDimension.Record(9, 9);
   private CellPosition selectedPosition = null;
 
   /**
@@ -28,4 +31,14 @@ public class Model {
   public CellPosition getSelected() {
     return this.selectedPosition;
   }
+
+  //public void setCellValue(CellPosition pos, int newValue) {
+    //SudokuCell currentCell = gd.get(pos);
+
+    //if (!currentCell.isFixed()) {
+    //}
+    //
+    //SudokuCell newCell = new SudokuCell(pos, newValue, false);
+    //grid.set(pos, newCell);
+  //}
 }

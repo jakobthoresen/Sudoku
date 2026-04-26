@@ -1,4 +1,4 @@
-package no.uib.inf101.sample;
+package no.uib.inf101.sample.datastructure;
 
 /** 
  * A GridDimension is the dimension of a grid. It has methods for

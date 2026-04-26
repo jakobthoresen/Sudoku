@@ -1,12 +1,17 @@
-package no.uib.inf101.sample;
+package no.uib.inf101.sample.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
+import no.uib.inf101.sample.datastructure.CellPosition;
+import no.uib.inf101.sample.datastructure.CellPositionToPixelConverter;
+import no.uib.inf101.sample.model.SudokuModel;
+import no.uib.inf101.sample.view.View;
+
 public class Controller extends MouseAdapter {
   
-  private Model model;
+  private SudokuModel model;
   private View view;
 
   /**
@@ -15,7 +20,7 @@ public class Controller extends MouseAdapter {
    * @param model model to update on key press
    * @param view view to listen to key presses in, and to be repainted when model changes
    */
-  public Controller(Model model, View view) {
+  public Controller(SudokuModel model, View view) {
     this.model = model;
     this.view = view;
     this.view.addMouseListener(this);

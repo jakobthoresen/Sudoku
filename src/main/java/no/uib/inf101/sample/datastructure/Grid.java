@@ -6,18 +6,14 @@ import java.util.List;
 
 public class Grid<T> implements IGrid<T> {
 
-    private int rows;
-    private int cols;
+    private final int rows;
+    private final int cols;
 
-    private List<List<T>> cells;
+    private final List<List<T>> cells;
 
-    public Grid(int rows, int cols) {
-        this(rows, cols, null);
-    }
-
-    public Grid(int rows, int cols, T defaulValue) {
-        this.rows = rows;
-        this.cols = cols;
+    public Grid(GridDimension gd, T defaulValue) {
+        this.rows = gd.rows();
+        this.cols = gd.cols();
 
         cells = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
@@ -45,7 +41,7 @@ public class Grid<T> implements IGrid<T> {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 CellPosition pos = new CellPosition(i, j);
-                GridCell<T> cell = new GridCell(pos, get(pos));
+                GridCell<T> cell = new GridCell<>(pos, get(pos));
                 gridCells.add(cell);
             }
         }

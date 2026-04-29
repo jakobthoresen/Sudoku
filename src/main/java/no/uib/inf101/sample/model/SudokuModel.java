@@ -15,34 +15,37 @@ public class SudokuModel {
   private CellPosition selectedPosition = null;
 
   private final IGrid<SudokuCell> grid;
+  private final int[][] solution;
 
   public SudokuModel() {
+
     this.grid = new Grid<>(gd, null);
-
-    for (int r = 0; r < gd.rows(); r++) {
-      for (int c = 0; c < gd.cols(); c++) {
-        CellPosition pos = new CellPosition(r, c);
-
-        grid.set(pos, new SudokuCell(pos, 0, false));
-          
-      }
-    }
-        
-    }
+    this.solution = SudokuBoardGenerator.fillGrid(this.grid);     
+  }
 
   public void setNumber(int number) {
-    if (selectedPosition != null) {
-      SudokuCell currentCell = grid.get(selectedPosition);
+    if (selectedPosition == null) return;
+    if(isSolved()) return;
 
+      SudokuCell currentCell = grid.get(selectedPosition);
       if(!currentCell.isFixed()) {
         SudokuCell newCell = new SudokuCell(selectedPosition, number, false);
         grid.set(selectedPosition, newCell);
     }
-    }
-
-    
   }
   
+  public boolean isCorrect(CellPosition pos) {
+    return grid.get(pos).value() == solution[pos.row()][pos.col()];
+  }
+
+  public boolean isSolved() {
+    for (int r = 0; r < gd.rows(); r++) {
+      for (int c = 0; c < gd.cols(); c++) {
+        if (!isCorrect(new CellPosition(r,c))) return false;
+      }
+    }
+    return true;
+  }
 
   /**
    * Set the selected position in the grid.
@@ -62,6 +65,13 @@ public class SudokuModel {
   /** Gets the selected cell in the grid.  */
   public CellPosition getSelected() {
     return this.selectedPosition;
+  }
+
+  public SudokuCell getCell(CellPosition pos) {
+  return grid.get(pos);
+}
+  public int getSolutionValue(CellPosition pos) {
+    return solution[pos.row()][pos.col()];
   }
 
 }

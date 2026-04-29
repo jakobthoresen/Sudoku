@@ -28,8 +28,17 @@ public class SudokuBoardGenerator {
 
         shuffleBoard(board, rand);
         fillCells(grid, board);
+
         int[][] solution = copySolution(board);
-        removeRandomCells(grid, rand, 45);
+        removeRandomCells(grid, rand, 40);
+
+        int[][] puzzle = new int[SIZE][SIZE];
+        for (int r = 0; r < SIZE; r++) {
+            for (int c = 0; c < SIZE; c++) {
+                puzzle[r][c] = grid.get(new CellPosition(r, c)).value();
+            }
+        }
+        if (!isSolvable(puzzle)) return fillGrid(grid);
         
         return solution;
     }
@@ -72,6 +81,39 @@ public class SudokuBoardGenerator {
             board[r1] = board[r2];
             board[r2] = temp;
         }
+    }
+
+    private static boolean isSolvable(int[][] board) {
+        for (int r = 0; r < SIZE; r++) {
+            for (int c = 0; c < SIZE; c++) {
+                if (board[r][c] == 0) {
+                    for (int num = 1; num < 9; num++) {
+                        if(isValidPlacement(board, r, c, num)) {
+                            board[r][c] = num;
+                            if (isSolvable(board)) return true;
+                            board[r][c] = 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean isValidPlacement(int[][] board, int r, int c, int num) {
+        for (int i = 0; i < SIZE; i++) {
+            if (board[r][i] == num) return false;
+            if (board[i][c] == num) return false;
+        }
+        int boxRow = (r / 3) * 3;
+        int boxCol = (c / 3) * 3;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[boxRow + i][boxCol + j] == num) return false;
+            }
+        }
+        return true;
     }
 
     // Helper function copying the board so i can compare a player solution to actual solution

@@ -11,7 +11,7 @@ import no.uib.inf101.sample.datastructure.IGrid;
  */
 public class SudokuModel {
   
-  private GridDimension gd = new GridDimension.Record(9, 9);
+  private final GridDimension gd = new GridDimension.Record(9, 9);
   private CellPosition selectedPosition = null;
 
   private final IGrid<SudokuCell> grid;
@@ -23,6 +23,12 @@ public class SudokuModel {
     this.solution = SudokuBoardGenerator.fillGrid(this.grid);     
   }
 
+  /**
+   * Sets the number of the selected cell to {@code number}
+   * Only works on non-fixed cells, and the game is not already solved
+   * 
+   * @param number the new value for the cell
+   */
   public void setNumber(int number) {
     if (selectedPosition == null) return;
     if(isSolved()) return;
@@ -34,10 +40,21 @@ public class SudokuModel {
     }
   }
   
+  /**
+   * Checks if a value is the same as the number in the same cell on the solutionboard
+   * 
+   * @param pos the position to check
+   * @return true if the value matches the solution, false otherwise
+   */
   public boolean isCorrect(CellPosition pos) {
     return grid.get(pos).value() == solution[pos.row()][pos.col()];
   }
 
+  /**
+   * Checks if all the values on the board are the same as the values on the solutionboard
+   * 
+   * @return a boolean
+   */
   public boolean isSolved() {
     for (int r = 0; r < gd.rows(); r++) {
       for (int c = 0; c < gd.cols(); c++) {
@@ -49,12 +66,15 @@ public class SudokuModel {
 
   /**
    * Set the selected position in the grid.
-   * 
-   * @param selectedPosition new position to be selected, or null if new selection
-   *                         should be the empty selection
+   * @param selectedPosition new position to be selected, null if new selection
+   *                         should be the empty selection or null if the position is outside the grid
    */
   public void setSelected(CellPosition selectedPosition) {
-    this.selectedPosition = selectedPosition;
+    if (selectedPosition != null && grid.positionIsOnGrid(selectedPosition)){
+      this.selectedPosition = selectedPosition;
+    } else {
+      this.selectedPosition = null;
+    }
   }
 
   /** Gets the dimension of the grid. */
@@ -67,9 +87,12 @@ public class SudokuModel {
     return this.selectedPosition;
   }
 
+  /** Gets the value of a cell based on position*/
   public SudokuCell getCell(CellPosition pos) {
-  return grid.get(pos);
-}
+    return grid.get(pos);
+  }
+
+  /** Gets the value of the equivalent cell on the solution board based on position */
   public int getSolutionValue(CellPosition pos) {
     return solution[pos.row()][pos.col()];
   }

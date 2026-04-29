@@ -12,8 +12,8 @@ public class CellPositionToPixelConverter {
   private final Rectangle2D box;
   private final GridDimension gd;
   private final double margin;
-  private double cellW;
-  private double cellH;
+  private final double cellW;
+  private final double cellH;
   
   /**
    * Constructs a new CellPositionToPixelConverter.

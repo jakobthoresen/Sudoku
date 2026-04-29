@@ -5,11 +5,13 @@ import java.util.Random;
 import no.uib.inf101.sample.datastructure.CellPosition;
 import no.uib.inf101.sample.datastructure.IGrid;
 
+/**
+ * Generates a legal SudokuBoard, and checks its validity using backtracking.
+ */
 public class SudokuBoardGenerator {
 
     private static final int SIZE = 9;
-    private static final int BOX_SIZE = 3;
-
+    
     private static final int[][] SEED_BOARD = {
         {5, 3, 4, 6, 7, 8, 9, 1, 2},
         {6, 7, 2, 1, 9, 5, 3, 4, 8},
@@ -22,6 +24,12 @@ public class SudokuBoardGenerator {
         {3, 4, 5, 2, 8, 6, 1, 7, 9}
     };
 
+    /**
+     * Generates a new sudoku puzzle by shuffling the seed board, then removing cells
+     * the generated board is solvable using recursion and backtracking
+     * @param grid the grid to be filled with the puzzle
+     * @return a 2D array representing the solution board (a fully filled out board)
+     */
     public static int[][] fillGrid(IGrid<SudokuCell> grid) {
         Random rand = new Random();
         int[][] board = copySolution(SEED_BOARD);
@@ -43,9 +51,9 @@ public class SudokuBoardGenerator {
         return solution;
     }
 
-
+    // Fills in the board into the grid
     private static void fillCells(IGrid<SudokuCell> grid, int[][] board) {
-        // Filling in the suffled board into the grid
+        
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 CellPosition pos = new CellPosition(r, c);
@@ -70,7 +78,7 @@ public class SudokuBoardGenerator {
         }
     }
 
-    // Helper function for shuffling the board
+    // Helper function for shuffling the board within the 3x3 blocks, keeping the board legal
     private static void shuffleBoard(int[][] board, Random rand) {
         for (int i = 0; i < 10; i++) {
             int block = rand.nextInt(3) * 3;
@@ -83,11 +91,12 @@ public class SudokuBoardGenerator {
         }
     }
 
+    // Uses recursive backtracking to check if the current board has a solution
     private static boolean isSolvable(int[][] board) {
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 if (board[r][c] == 0) {
-                    for (int num = 1; num < 9; num++) {
+                    for (int num = 1; num <= 9; num++) {
                         if(isValidPlacement(board, r, c, num)) {
                             board[r][c] = num;
                             if (isSolvable(board)) return true;

@@ -15,8 +15,8 @@ import no.uib.inf101.sample.view.SudokuView;
 
 public class SudokuController extends MouseAdapter implements KeyListener {
   
-  private SudokuModel model;
-  private SudokuView view;
+  private final SudokuModel model;
+  private final SudokuView view;
 
   /**
    * Construct a controller recating to key presses.
@@ -27,10 +27,9 @@ public class SudokuController extends MouseAdapter implements KeyListener {
   public SudokuController(SudokuModel model, SudokuView view) {
     this.model = model;
     this.view = view;
+
+    // Register the controller as listener for both mouse and keyboard inputs 
     this.view.addMouseListener(this);
-
-    // Allowing Keyboard inputs:
-
     this.view.addKeyListener(this);
 
     this.view.setFocusable(true);

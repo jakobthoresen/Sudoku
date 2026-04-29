@@ -19,7 +19,7 @@ import no.uib.inf101.sample.model.SudokuCell;
 import no.uib.inf101.sample.model.SudokuModel;
 
 /**
- * A view of a grid
+ * A view of a sudoku board
  */
 public class SudokuView extends JPanel {
 
@@ -38,9 +38,12 @@ public class SudokuView extends JPanel {
   private static final Color COLOR_USER_NUM = Color.BLUE;
   private static final Color COLOR_GRID_LINE = Color.BLACK;
 
-  private SudokuModel model;
+  private final SudokuModel model;
 
-  /** Construct a new View */
+  /** Construct a new SudokuView that vizualises the model
+   * Sets the preferred size of the window
+   * @param model the SudokuModel we are visualizing
+  */
   public SudokuView(SudokuModel model) {
     this.model = model;
     this.setPreferredSize(new Dimension(PREFERRED_SIZE, PREFERRED_SIZE));
@@ -52,7 +55,12 @@ public class SudokuView extends JPanel {
     Graphics2D g2 = (Graphics2D) g;
     drawBoard(g2);
   }
-
+  
+  /**
+   * Iterates through the grid and draws each cell, its background, border and value. then draws thickened borders for 3x3 boxes
+   * 
+   * @param g2 the Graphics2D context used for drawing
+   */
   private void drawBoard(Graphics2D g2) {
     CellPositionToPixelConverter converter = this.getCellPositionToPixelConverter();
     
@@ -84,19 +92,20 @@ public class SudokuView extends JPanel {
 
   private void drawNumber(Graphics2D g2, Rectangle2D box, SudokuCell cell) {
       
-      g2.setColor(cell.isFixed() ? Color.BLACK : Color.BLUE);
+      g2.setColor(cell.isFixed() ? COLOR_FIXED_NUM : COLOR_USER_NUM);
       g2.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
 
       String text = String.valueOf(cell.value());
       FontMetrics fm = g2.getFontMetrics();
 
-      // Centers the number in each cell
+      // Centers the number in each cell (Here i got help from AI to figure out how to calculate the centre)
       float x = (float) (box.getX() + (box.getWidth() - fm.stringWidth(text)) / 2);
       float y = (float) (box.getY() + (box.getHeight() + fm.getAscent()) / 2 - fm.getDescent());
 
       g2.drawString(text, x, y);
     }
 
+    // This method is also made with the help of AI, to figure out the math of how to draw the 3x3 boxes using thicker lines
     private void drawBoxBoarders(Graphics2D g2) {
       CellPositionToPixelConverter converter = this.getCellPositionToPixelConverter();
 

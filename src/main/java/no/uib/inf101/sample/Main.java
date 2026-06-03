@@ -17,7 +17,7 @@ public class Main {
 
     JFrame frame = new JFrame();
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setTitle("INF101");
+    frame.setTitle("Sudoku");
     frame.setContentPane(view);
     frame.pack();
     frame.setVisible(true);

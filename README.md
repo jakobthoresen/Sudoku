@@ -45,7 +45,7 @@ src/
 **Prerequisites:** Java 17+, Maven
 
 ```bash
-git clone https://github.com/jakobthoresen/sudoku-java.git
+git clone https://github.com/jakobthoresen/Sudoku.git
 cd sudoku-java
 mvn compile exec:java -Dexec.mainClass="no.uib.inf101.sample.Main"
 ```
